@@ -30,6 +30,7 @@ def genChoice(layer):
             thrChoice   = [ (4,5,6), (7,8,9), (8,9,10), (11,12,13), (12,13,14), (13,14,15),
                             (6,9,13), (3,5,8), (5,8,12), (1,2,4), (2,4,7), (4,7,11),
                             (4,8,13), (2,5,9), (5,9,14), (1,3,6), (3,6,10), (6,10,15)]
+                            #total 63
     elif    layer == 6:
             oneChoice   = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
             twoChoice   = [ (2,3), (4,5), (5,6), (7,8), (8,9), (9,10), (11,12), (12,13), (13,14), (14,15), (16,17), (17,18), (18,19), (19,20), (20,21),
@@ -41,6 +42,33 @@ def genChoice(layer):
     else:   print("Can not analyze lower than 3 layers and larger than 6 layers !")
 
     return [oneChoice, twoChoice, thrChoice]
+
+
+def chessprogress_num(readyToDeleteSet):
+    oneChoice   = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15]
+    twoChoice   = [ (2,3), (4,5), (5,6), (7,8), (8,9), (10), (11,12), (12,13), (13,14), (14,15),(1,2), (2,4), (4,7), (7,11), (3,5), (8), (8,12), (6,9), (9,13), (10,14),(1,3), (3,6), (6,10), (10,15), (2,5),(5,9), (9,14), (4,8), (8,13), (7,12)]
+    thrChoice   = [ (4,5,6), (7,8,9), (8,9,10), (11,12,13), (12,13,14), (13,14,15),(6,9,13), (3,5,8), (5,8,12), (1,2,4),(2,4,7), (4,7,11),(4,8,13), (2,5,9), (5,9,14), (1,3,6),(3,6,10), (6,10,15) ]
+
+    out =[]
+    for i in range(0, len(readyToDeleteSet)):
+        print(readyToDeleteSet)
+        num = readyToDeleteSet[i]
+        print(num)
+        if num in oneChoice:
+            x = oneChoice.index(num)
+
+        elif num in twoChoice:
+            x = twoChoice.index(num) + 14
+        else:
+            x = thrChoice.index(num) + 44
+        out.append(x)
+
+    return out
+
+
+
+
+
 
 
 ################################
@@ -172,15 +200,35 @@ def genVicChess(vicChessNum, layer):
         # 儲存勝利棋譜至vicChessList
         if len(deleteOrder) % 2 == 0: 
             vicChessList.append(deleteOrder)
-            vicChessNow += 1
+
+        oneChoice   = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15]
+        twoChoice   = [ (2,3), (4,5), (5,6), (7,8), (8,9), (9,10), (11,12), (12,13), (13,14), (14,15),(1,2), (2,4), (4,7), (7,11), (3,5), (5,8), (8,12), (6,9), (9,13), (10,14),(1,3), (3,6), (6,10), (10,15), (2,5),(5,9), (9,14), (4,8), (8,13), (7,12)]
+        thrChoice   = [ (4,5,6), (7,8,9), (8,9,10), (11,12,13), (12,13,14), (13,14,15),(6,9,13), (3,5,8), (5,8,12), (1,2,4),(2,4,7), (4,7,11),(4,8,13), (2,5,9), (5,9,14), (1,3,6),(3,6,10), (6,10,15) ]
+
+        vicChessList_out =[]
+        for i in range(0, len(deleteOrder)):
+       
+            num = deleteOrder[i]
+    
+            if num in oneChoice:
+                x = oneChoice.index(num)
+
+            elif num in twoChoice:
+                x = twoChoice.index(num) + 14
+            else:
+                x = thrChoice.index(num) + 44
+            vicChessList_out.append(x)
+        #print(vicChessList_out)
+
+        vicChessNow += 1
         
-            # 進度顯示
-            if vicChessNow % (vicChessNum / 10) == 0:
-                print("genVicChess progress: " + str(100.0 * vicChessNow/vicChessNum) + " %")
+        # 進度顯示
+        if vicChessNow % (vicChessNum / 10) == 0:
+            print("genVicChess progress: " + str(100.0 * vicChessNow/vicChessNum) + " %")
 
         if vicChessNow == vicChessNum: break
 
-    return vicChessList
+    return vicChessList  ,  vicChessList_out
 
 
 ################################
