@@ -2,9 +2,9 @@ import game_fuctions
 
 # 相關變數(可以調整)
 layer           = 5         # 2 < layer < 7
-gameNum         = 100  # 遊戲次數
-vicChessNum     = 1000      # 參考的勝利棋譜數量
-failChessNum    = 1000      # 參考的失敗棋譜數量
+gameNum         = 1000      # 遊戲次數
+vicChessNum     = 1000000      # 參考的勝利棋譜數量
+failChessNum    = 1000000      # 參考的失敗棋譜數量
 
 # 相關變數(不要調整)
 vicNum          = 0         # AI獲勝次數
@@ -22,7 +22,6 @@ failChessList   = game_fuctions.genFailChess(failChessNum, layer)
 
 # while continue_flag == 1:
 for i_test in range(0,3):
-    
 
     for i_game in range(0, gameNum):
     
@@ -31,9 +30,8 @@ for i_test in range(0,3):
         deleteTotal         = 0                                 # 目前總共刪除的個數
         deleteOrder         = []                                # 用來儲存刪除的過程
         choiceListNow       = game_fuctions.genChoice(layer)    # 產生可以刪除的各種可能
-        print ('test')
-        vicChessList_temp   = vicChessList
-        failChessList_temp  = failChessList
+        vicChessList_temp   = vicChessList.copy()
+        failChessList_temp  = failChessList.copy()
 
         # 進度顯示
         if i_game % (gameNum / 10) == 0: 
